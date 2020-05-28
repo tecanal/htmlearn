@@ -5,8 +5,13 @@ Play with the deployed version on [TeCanal](https://tecanal.org/htmlearn).
 
 Created by [Rees Draminski](https://github.com/reesdraminski).
 
+## Stages
+1. Meme Maker: Learn basic tags and styling.
+2. Comic Creator: Learn CSS classes and inline styling.
+3. Blog Publisher: Learn more tags and advanced styling.
+
 ## Code
-* [js/app.js](js/editor.js): UI controls and functionality (CodeMirror setup, code execution, etc).
+* [js/editor.js](js/editor.js): UI controls and functionality (CodeMirror setup, code execution, etc).
 
 ## Dependencies
 * [CodeMirror](https://codemirror.net/): This is used to create the editor environment.
