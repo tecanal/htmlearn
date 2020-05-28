@@ -38,9 +38,17 @@ window.onload = function() {
     let currentTab = "index.html";
     function updatePreview() {
         if (currentTab == "index.html") {
+            // get current HTML content from editor
+            html = editor.getValue();
+
+            // update HTML preview
             document.getElementById("preview").innerHTML = html;
         }
         else if (currentTab == "style.css") {
+            // get current CSS content from editor
+            css = editor.getValue();
+
+            // update CSS style
             document.getElementById("userStyle").innerHTML = css;
         }
     }
