@@ -1,3 +1,5 @@
+const my_lzma = new LZMA("../js/lzma_worker.js");
+
 // store the html and css that will be edited by the user
 let html, css;
 
@@ -34,6 +36,32 @@ window.onload = function() {
         styleActiveLine: { nonEmpty: true },
         value: html
     });
+
+    if (window.location.hash && window.location.hash.indexOf("?") != -1) {
+        const hash = window.location.hash;
+        const encodedData = hash.substring(2);
+
+        const rawData = atob(encodedData);
+
+        const rawLength = rawData.length;
+        let array = new Uint8Array(new ArrayBuffer(rawLength));
+
+        for (let i = 0; i < rawLength; i++) {
+            array[i] = rawData.charCodeAt(i);
+        }
+
+        my_lzma.decompress(array, result => {
+            // convert decode string into JSON object
+            const code = JSON.parse(result);
+
+            // get HTML and CSS
+            html = code.html;
+            css = code.css;
+
+            // update the HTML
+            editor.setValue(html);
+        });
+    }
 
     let currentTab = "index.html";
     function updatePreview() {
@@ -96,4 +124,89 @@ window.onload = function() {
             }
         });
     }
+}
+
+// listen for escape key press
+document.onkeyup = e => {
+    if (e.key == "Escape") closeModal();
+}
+
+// when the user clicks anywhere outside of the modal, close it
+window.onclick = e => {
+    // if clicking outside of modal
+    if (e.target == document.getElementById("myModal")) closeModal();
+}
+
+/**
+ * Generate a standalone HTML page and download it for offline use.
+ */
+function exportPage() {
+    // generate html page
+    const page = `<html><head><style>${css}</style></head><body>${html}</body></html>`;
+    
+    // create html blob with html we created
+    const blob = new Blob([ page ], { type: "text/html" });
+
+    // create a download link
+    const el = window.document.createElement("a");
+    el.href = window.URL.createObjectURL(blob);
+    el.download = "htmlearn_export.html";    
+
+    // add link to document so we can click, then remove it
+    document.body.appendChild(el);
+    el.click();     
+    document.body.removeChild(el);
+}
+
+/**
+ * Create a URL that can be used to share code.
+ */
+function shareCode() {
+    // get user code and stringify
+    const code = JSON.stringify({ "html": html, "css": css });
+
+    // compress code with LZMA
+    my_lzma.compress(code, 9, result => {
+        // convert ByteArray into string and base64 encode it
+        const base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(result)));
+
+        // get current URL without any hash
+        const url = location.href.replace(location.hash, "");
+
+        // create a textarea element with the share URL
+        const textArea = document.createElement("textarea");
+        textArea.value = url + "#?" + base64String;
+
+        // add to body
+        document.body.appendChild(textArea);
+
+        // focus and select text to and copy to clipboard
+        textArea.focus();
+        textArea.select();
+        document.execCommand("copy");
+
+        // cleanup and remove textarea element
+        document.body.removeChild(textArea);
+
+        // let the user know that the text was copied
+        alert("URL copied to clipboard");
+    });
+}
+
+/**
+ * Open the modal.
+ */
+function openModal() {
+    const modal = document.getElementById("myModal");
+
+    // show modal
+    modal.style.display = "block";
+}
+
+/**
+ * Close the modal.
+ */
+function closeModal() { 
+    const modal = document.getElementById("myModal");
+    modal.style.display = "none";
 }

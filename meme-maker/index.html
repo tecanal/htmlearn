@@ -54,6 +54,8 @@
                 <li class="active">index.html</li>
                 <li>style.css</li>
             </ul>
+
+            <button id="optionsButton" class="pull-right" onclick="openModal()">Options</button>
         </nav>
         
         <div class="panel-container">
@@ -65,6 +67,36 @@
 
             <div class="panel-right">
                 <div id="preview"></div>
+            </div>
+        </div>
+
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close" onclick="closeModal()">&times;</span>
+                </div>
+
+                <div class="modal-body">
+                    <h3>Export Code to HTML Page</h3>
+                    <p>
+                        This allows you to generate a downloadable HTML file, which automatically runs your code and displays the results. You can open it up in any browser, which makes it great if you made a game and want to download it and play it whenever you want.
+                    </p>
+                       
+                    <p>
+                        <button class="btn" onclick="exportPage()">Export</button>
+                    </p>
+                        
+                    <h3>Share Code With URL</h3>
+                    <p>
+                        This allows you to create a link that contains all of your code. You can then send/share this link wherever, and if someone clicks on the link, it will open up this website with your code already loaded into the editor.
+                    </p>
+
+                    <p>
+                        <button class="btn" onclick="shareCode()">Share</button>
+                    </p>
+                </div>
+
+                <div class="modal-header"></div>
             </div>
         </div>
 
@@ -80,6 +112,7 @@
         <script src="../js/jquery.slim.min.js"></script>
         <script src="../js/jquery-resizable.min.js"></script>
 
+        <script src="../js/lzma.js"></script>
         <script src="../js/editor.js"></script>
         <script>
             const _initialHTML = "<div id=\"meme\">\n\t<img src=\"https://imgflip.com/s/meme/Doge.jpg\">\n\n\t<h1>TOP TEXT</h1>\n\n\t<h2>BOTTOM TEXT</h2>\n</div>";
