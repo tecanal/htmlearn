@@ -104,12 +104,6 @@ window.onload = function() {
 
     let currentTab = "index.html";
     function updatePreview() {
-        // if localStorage available, save code
-        if (hasLocalStorage) {
-            localStorage.setItem(`${appName}-html`, html);
-            localStorage.setItem(`${appName}-css`, css);
-        }
-        
         if (currentTab == "index.html") {
             // get current HTML content from editor
             html = editor.getValue();
@@ -123,6 +117,12 @@ window.onload = function() {
 
             // update CSS style
             document.getElementById("userStyle").innerHTML = css;
+        }
+
+        // if localStorage available, save code
+        if (hasLocalStorage) {
+            localStorage.setItem(`${appName}-html`, html);
+            localStorage.setItem(`${appName}-css`, css);
         }
     }
 
