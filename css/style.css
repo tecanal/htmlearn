@@ -47,6 +47,22 @@ nav ul li.active {
     background-color: #3954AE
 }
 
+/* Mobile displays */
+@media only screen and (max-width: 768px) {
+    .splitter { display: none; }
+
+    #preview { display: none; }
+
+    .panel-container { height: 93% !important; }
+    #editor, #preview { width: 100vw; }
+    
+    #edit, #execute { width: 50vw; height: 100%; font-size: 1em; }
+    #edit { background-color: #3954AE; color: white; }
+    #execute { background-color: #4CAF50; color: white; float: right; }
+
+    #bottomShelf { display: block; height: 7%; }
+}
+
 .pull-right { 
     margin-left: auto; 
 }

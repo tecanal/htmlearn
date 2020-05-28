@@ -170,6 +170,28 @@ window.onload = function() {
             }
         });
     }
+
+    // set mobile button click listeners
+    document.getElementById("edit").onclick = editMobile;
+    document.getElementById("execute").onclick = runMobile;
+
+    function runMobile() {
+        // hide code editor
+        document.getElementsByClassName("panel-left")[0].style.display = "none";
+
+        updatePreview();
+
+        // show preview
+        document.getElementById("preview").style.display = "block";
+    }
+
+    function editMobile() {
+        // hide preview
+        document.getElementById("preview").style.display = "none";
+
+        // show code editor
+        document.getElementsByClassName("panel-left")[0].style.display = "";
+    }
 }
 
 // listen for escape key press
