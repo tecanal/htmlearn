@@ -107,6 +107,7 @@
             const _initialHTML = "<ul id=\"menu\">\n\t<li>\n\t\t<a href=\"#\">Home</a>\n\t</li>\n\n\t<li>\n\t\t<a href=\"#about\">About</a>\n\t</li>\n</ul>\n\n<h1 style=\"text-align: center\">Blog Title</h1>\n\n<div class=\"post\">\n\t<h2>Post Title</h2>\n\t<small>Date: January 1st, 2019</small>\n\n\t<p>\n\t\tPost paragraph #1.\n\t</p>\n\n\t<p>\n\t\tPost paragraph #2.\n\t</p>\n</div>\n\n<div id=\"about\">\n\t<h2>About the Author</h2>\n\t<p>\n\tThe author is from City, State, and when not found writing loves to do this, this, and this.\n\t</p>\n</div>";
             const _initialCSS = "body {\n\tfont-family: sans-serif;\n}\n\n#menu {\n\tpadding-left: 0px;\n}\n\n#menu li {\n\tdisplay: inline;\n}\n\n#menu li:after {\n\tcontent: \"/\";\n} \n\n#menu li:last-child:after {\n\tcontent: \"\";\n}\n\n.post {\n\tborder: 1px solid black;\n\tpadding: 10px;\n\tmargin-bottom: 20px;\n}\n\n.post h2 {\n\tmargin-bottom: 5px;\n}";
 
+            setAppName("blog-publisher");
             setInitialHTML(_initialHTML);
             setInitialCSS(_initialCSS);
         </script>

@@ -1,4 +1,7 @@
 const my_lzma = new LZMA("../js/lzma_worker.js");
+let hasLocalStorage = false;
+
+let appName = "";
 
 // store the html and css that will be edited by the user
 let html, css;
@@ -17,6 +20,14 @@ function setInitialHTML(_html) {
  */
 function setInitialCSS(_css) {
     css = _css;
+}
+
+/**
+ * Set the app name that will be used to store things in localStorage.
+ * @param {String} _appName 
+ */
+function setAppName(_appName) {
+    appName = _appName;
 }
 
 window.onload = function() {
@@ -63,6 +74,34 @@ window.onload = function() {
         });
     }
 
+    // test for localStorage capabilities
+    try {
+        let test = 'test';
+
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+
+        hasLocalStorage = true;
+    } 
+    catch(e) {
+        hasLocalStorage = false;
+    }
+
+    // if the browser supports localStorage
+    if (hasLocalStorage) {
+        // check if the user has html saved before
+        if (localStorage.getItem(`${appName}-html`)) {
+            html = localStorage.getItem(`${appName}-html`);
+
+            editor.setValue(html);
+        }
+        
+        // check if the user has css saved before
+        if (localStorage.getItem(`${appName}-css`)) {
+            css = localStorage.getItem(`${appName}-css`);
+        }
+    }
+
     let currentTab = "index.html";
     function updatePreview() {
         if (currentTab == "index.html") {
@@ -84,8 +123,15 @@ window.onload = function() {
     // when the editor is updated handler
     let delay;
     editor.on("change", () => {
+        // reset delay and add delay again
         clearTimeout(delay);
         delay = setTimeout(updatePreview, 300);
+
+        // if localStorage available, save code
+        if (hasLocalStorage) {
+            localStorage.setItem(`${appName}-html`, html);
+            localStorage.setItem(`${appName}-css`, css);
+        }
     });
 
     // show initial preview
